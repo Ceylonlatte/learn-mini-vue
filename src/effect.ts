@@ -4,13 +4,16 @@ const targetMap = new WeakMap();
 let activeEffect;
 let shouldTrack;
 
-class ReactiveEffect {
+export class ReactiveEffect {
   private _fn: any;
   deps = [];
   active = true;
   onStop?: () => void;
-  constructor(fn, private scheduler) {
+  public scheduler: Function | undefined;
+
+  constructor(fn, scheduler? : Function) {
     this._fn = fn;
+    this.scheduler = scheduler;
   }
   run() {
     if (!this.active) {
