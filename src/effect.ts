@@ -8,33 +8,31 @@ class ReactiveEffect {
   private _fn: any;
   deps = [];
   active = true;
-  onStop?:()=> void;
+  onStop?: () => void;
   constructor(fn, private scheduler) {
     this._fn = fn;
   }
   run() {
-   
-    if(!this.active) {
-     return this._fn()
+    if (!this.active) {
+      return this._fn();
     }
-    shouldTrack = true
+    shouldTrack = true;
     activeEffect = this;
-    const result = this._fn()
+    const result = this._fn();
 
-    // reset 
-    shouldTrack = false
+    // reset
+    shouldTrack = false;
 
     return result;
   }
   stop() {
-    if(this.active) {
+    if (this.active) {
       cleanupEffect(this);
-      if(this.onStop) {
-        this.onStop()
+      if (this.onStop) {
+        this.onStop();
       }
       this.active = false;
     }
-   
   }
 }
 
@@ -45,8 +43,7 @@ function cleanupEffect(effect) {
 }
 
 export function track(target, key) {
-  if(!isTracking()) return; 
-
+  if (!isTracking()) return;
 
   let depsMap = targetMap.get(target);
 
@@ -63,15 +60,19 @@ export function track(target, key) {
     depsMap.set(key, dep);
   }
 
+  trackEffects(dep);
+}
+
+export function trackEffects(dep) {
   // 如果activeEffect已经在dep中不需要重复收集
-  if(dep.has(activeEffect)) return;
-  
+  if (dep.has(activeEffect)) return;
+
   dep.add(activeEffect);
   activeEffect.deps.push(dep);
 }
 
-function isTracking() {
-  return shouldTrack && activeEffect !== undefined
+export function isTracking() {
+  return shouldTrack && activeEffect !== undefined;
 }
 
 export function trigger(target, key) {
@@ -79,6 +80,10 @@ export function trigger(target, key) {
 
   const deps = depsMap.get(key);
 
+  triggerEffects(deps);
+}
+
+export function triggerEffects(deps) {
   for (const effect of deps) {
     if (effect.scheduler) {
       effect.scheduler();
@@ -91,8 +96,8 @@ export function trigger(target, key) {
 export function effect(fn, options: any = {}) {
   const _effect = new ReactiveEffect(fn, options.scheduler);
   // extend
-  extend(_effect, options)
-  
+  extend(_effect, options);
+
   _effect.run();
 
   const runner: any = _effect.run.bind(_effect);
