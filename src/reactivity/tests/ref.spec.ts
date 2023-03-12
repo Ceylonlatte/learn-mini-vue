@@ -1,6 +1,6 @@
 import { effect } from "../../effect";
 import { reactive } from "../../reactive";
-import { ref , isRef, unRef} from "../../ref";
+import { ref , isRef, unRef, proxyRefs} from "../../ref";
 
 describe("ref", () => {
   it("should hold a value", () => {
@@ -50,10 +50,32 @@ describe("ref", () => {
     expect(isRef(1)).toBe(false);
     expect(isRef(user)).toBe(false);
   });
-  
+
   it("unRef", () => {
     const a = ref(1);
     expect(unRef(a)).toBe(1);
     expect(unRef(1)).toBe(1);
+  });
+
+  it("proxyRefs", () => {
+    // template直接可以访问ref，不需要ref.value,实际上就是调用proxyRefs来解构
+    const user = {
+      age: ref(10),
+      name: "lxp"
+    }
+    let proxyUser = proxyRefs(user)
+    expect(user.age.value).toBe(10);
+    expect(proxyUser.age).toBe(10);
+    expect(proxyUser.name).toBe('lxp');
+
+    proxyUser.age = 20;
+    
+    expect(proxyUser.age).toBe(20)
+    expect(user.age.value).toBe(20)
+
+    proxyUser.age = ref(10);
+    
+    expect(proxyUser.age).toBe(10)
+    expect(user.age.value).toBe(10)
   });
 });
