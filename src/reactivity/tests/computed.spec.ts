@@ -1,5 +1,5 @@
-import { computed } from "../../computed";
-import { reactive } from "../../reactive";
+import { computed } from "../computed";
+import { reactive } from "../reactive";
 
 // computed的优势在于缓存，当依赖的响应式数据没有发生改变的话，二次调用computed不会触发计算方法,只有当响应式数据发生改变时，才会重新触发计算方法
 

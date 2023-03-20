@@ -1,6 +1,6 @@
-import { effect } from "../../effect";
-import { reactive } from "../../reactive";
-import { ref , isRef, unRef, proxyRefs} from "../../ref";
+import { effect } from "../effect";
+import { reactive } from "../reactive";
+import { ref , isRef, unRef, proxyRefs} from "../ref";
 
 describe("ref", () => {
   it("should hold a value", () => {

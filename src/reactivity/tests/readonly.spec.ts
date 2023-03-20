@@ -1,4 +1,4 @@
-import { readonly, isReadonly, isProxy } from "../../reactive";
+import { readonly, isReadonly, isProxy } from "../reactive";
 
 describe('readonly', ()=> {
     it('happy path', ()=> {

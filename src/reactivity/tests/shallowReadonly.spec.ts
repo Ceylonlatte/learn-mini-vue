@@ -1,4 +1,4 @@
-import { isReadonly, shallowReadonly } from "../../reactive"
+import { isReadonly, shallowReadonly } from "../reactive"
 
 describe('shallowReadonly', ()=> {
     test("should note make non-reactive properties reactive", ()=> {

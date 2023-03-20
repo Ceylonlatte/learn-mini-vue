@@ -1,6 +1,6 @@
 import { isTracking, trackEffects, triggerEffects } from "./effect";
 import { reactive } from "./reactive";
-import { hasChanged, isObject } from "./shared";
+import { hasChanged, isObject } from "../shared";
 
 // ref 传过来如果是对象的话需要转成reative对象
 

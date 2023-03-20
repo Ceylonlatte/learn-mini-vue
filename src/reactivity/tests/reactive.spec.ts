@@ -1,5 +1,4 @@
-import {reactive} from '../../index';
-import {isProxy, isReactive} from '../../reactive'
+import { isProxy, isReactive, reactive } from "../reactive";
 
 describe('reactive', ()=> {
     it('happy path', ()=> {
