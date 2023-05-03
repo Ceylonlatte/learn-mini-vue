@@ -1,9 +1,9 @@
 // 这个文件充当 vue 模块
-export * from "./reactivity";
+export * from "../src/reactivity";
 import * as runtimeDom from "../src/runtime-dom";
 import { registerRuntimeCompiler } from "../src/runtime-dom";
 
-import { baseCompile } from "./compiler-core/src";
+import { baseCompile } from "../src/compiler-core/src";
 
 export * from "../src/runtime-dom";
 
